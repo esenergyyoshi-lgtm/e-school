@@ -1,0 +1,2464 @@
+/* ================================================================
+   高崎セラピストスクール — スタイルシート
+   ================================================================
+
+   【ファイル構成】
+   1.  変数定義（色・フォント）← ここを変えると全体に反映されます
+   2.  リセット・基本設定
+   3.  共通レイアウト（コンテナ・セクション）
+   4.  共通パーツ（ラベル・タイトル・区切り線・バッジ・ボタン）
+   5.  ヘッダー
+   6.  ヒーローセクション
+   7.  共感セクション
+   8.  選ばれる理由
+   9.  ギャラリー
+   10. 先生紹介
+   11. 著書紹介
+   12. 講座ラインナップ
+   13. 受講の流れ
+   14. 卒業生の声
+   15. FAQ（アコーディオン）
+   16. お問い合わせ・CTA
+   17. フォーム
+   18. フッター
+   19. スティッキーCTA
+   20. アニメーション
+   21. PCレイアウト（768px以上）
+
+   ================================================================ */
+
+
+/* ================================================================
+   1. 変数定義
+   ✏️ ここの値を変えると、サイト全体の色・フォントが一括で変わります
+   ================================================================ */
+:root {
+
+  /* --- 背景色 --- */
+  --color-base:        #FDFAF6;   /* メインの背景（温かみのあるアイボリー） */
+  --color-ivory:       #F5EFE6;   /* 少し濃いアイボリー（交互の背景） */
+  --color-beige:       #EDE3D7;   /* ベージュ（先生・FAQセクション） */
+  --color-beige-mid:   #E0D4C4;   /* ベージュ（カード内背景） */
+  --color-beige-dark:  #D4C4B0;   /* ベージュ（ボーダー・区切り） */
+  --color-white:       #FFFFFF;
+
+  /* --- アクセントカラー（ブラウン系） --- */
+  --color-brown-light: #C8A98A;   /* ライトブラウン（ボーダー・装飾） */
+  --color-brown:       #9B7B5A;   /* メインブラウン（ボタン・リンク） */
+  --color-brown-dark:  #6B4F35;   /* ダークブラウン（見出し・ヘッダー） */
+
+  /* --- アクセントカラー（グリーン系） --- */
+  --color-green-pale:  #EEF3EB;   /* 薄いグリーン（共感セクション背景） */
+  --color-green:       #8FAF8A;   /* メイングリーン（ドット・FAQ回答） */
+  --color-green-dark:  #5E8059;   /* ダークグリーン（強調・受講後テキスト） */
+
+  /* --- テキスト色 --- */
+  --color-text:        #3D3530;   /* メインテキスト（やわらかいほぼ黒） */
+  --color-text-mid:    #7A6A5A;   /* サブテキスト（説明文など） */
+  --color-text-light:  #B0A090;   /* 薄いテキスト（補足・注釈） */
+
+  /* --- フォント --- */
+  /* ✏️ フォントを変える場合はここと <head> の Google Fonts リンクを両方変更してください */
+  --font-serif: 'Noto Serif JP', 'Georgia', serif;          /* 見出し用（上品な明朝体） */
+  --font-sans:  'Noto Sans JP', 'Hiragino Sans', sans-serif; /* 本文用（読みやすいゴシック） */
+  --font-en:    'Cormorant Garamond', serif;                 /* 英語装飾用（細くエレガント） */
+
+  /* --- レイアウト --- */
+  --container-max:   680px;   /* コンテンツの最大幅 */
+  --header-height:   60px;    /* ヘッダーの高さ */
+  --section-padding: 56px;    /* セクションの上下余白 */
+}
+
+
+/* ================================================================
+   2. リセット・基本設定
+   ブラウザのデフォルトスタイルを統一します
+   ================================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* アンカーリンクがヘッダーに隠れないようにオフセットを設定 */
+  scroll-padding-top: calc(var(--header-height) + 8px);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-base);
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* 横スクロールを防止 */
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  color: inherit;
+}
+
+
+/* ================================================================
+   3. 共通レイアウト
+   ================================================================ */
+
+/* コンテナ：コンテンツの横幅を制限する枠 */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 22px;
+}
+
+/* セクション共通の上下余白 */
+.section {
+  padding: var(--section-padding) 0;
+}
+
+/* セクションの背景バリエーション */
+.section--ivory { background-color: var(--color-ivory); }
+.section--beige { background-color: var(--color-beige); }
+
+/* CTAセクション（ダークブラウンのグラデーション背景） */
+.section--cta {
+  background: linear-gradient(155deg, var(--color-brown-dark) 0%, #8B6040 100%);
+}
+
+
+/* ================================================================
+   4. 共通パーツ
+   ================================================================ */
+
+/* --- 英語ラベル（セクション上部の小さい英語） --- */
+.label-en {
+  display: block;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--color-brown-light);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+/* --- セクションタイトル --- */
+.section__title {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 400;
+  text-align: center;
+  color: var(--color-brown-dark);
+  line-height: 1.65;
+  letter-spacing: 0.04em;
+}
+
+/* CTA内タイトル（白色） */
+.section__title--light {
+  color: var(--color-white);
+}
+
+/* --- 区切り線 --- */
+.section__rule {
+  width: 36px;
+  height: 1px;
+  background: var(--color-brown-light);
+  margin: 14px auto 30px;
+}
+
+/* CTA内区切り線（半透明の白） */
+.section__rule--light {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* --- バッジ（「未経験歓迎」などのタグ） --- */
+.badge {
+  display: inline-block;
+  background: rgba(253, 250, 246, 0.9);
+  border: 1px solid var(--color-beige-dark);
+  color: var(--color-brown);
+  font-size: 11px;
+  padding: 4px 13px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+
+/* --- ボタン：メイン（ブラウン・塗りつぶし） --- */
+.btn-main {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 13px;
+  background: var(--color-brown);
+  color: #fff;
+  text-align: center;
+  padding: 16px 22px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  box-shadow: 0 4px 18px rgba(107, 79, 53, 0.25);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.btn-main:hover, .btn-main:focus-visible {
+  background: var(--color-brown-dark);
+  transform: translateY(-1px);
+  outline: none;
+}
+/* ボタン内の小さい補足テキスト */
+.btn-main small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 300;
+  opacity: 0.82;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+/* --- ボタン：サブ（アウトライン） --- */
+.btn-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  background: var(--color-white);
+  color: var(--color-brown-dark);
+  border: 1.5px solid var(--color-brown-light);
+  padding: 13px 22px;
+  border-radius: 40px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease;
+}
+.btn-sub:hover, .btn-sub:focus-visible {
+  background: var(--color-ivory);
+  outline: none;
+}
+.btn-sub svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+/* --- ボタン：CTA内メイン（白背景） --- */
+.btn-main-inv {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 13px;
+  background: var(--color-white);
+  color: var(--color-brown-dark);
+  text-align: center;
+  padding: 16px 22px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+.btn-main-inv:hover, .btn-main-inv:focus-visible {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* --- ボタン：CTA内サブ（透明・白枠） --- */
+.btn-sub-inv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  background: transparent;
+  color: var(--color-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  padding: 13px 22px;
+  border-radius: 40px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease;
+}
+.btn-sub-inv:hover, .btn-sub-inv:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+.btn-sub-inv svg {
+  flex-shrink: 0;
+}
+
+
+/* ================================================================
+   5. ヘッダー
+   ================================================================ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: rgba(253, 250, 246, 0.96);
+  /* すりガラス効果（対応ブラウザのみ） */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-beige-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+/* スクロール時に影がつく（JavaScriptで .is-scrolled を付与） */
+.header.is-scrolled {
+  box-shadow: 0 2px 16px rgba(107, 79, 53, 0.1);
+}
+
+.header__logo a {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-brown-dark);
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+/* ロゴの英語サブタイトル */
+.header__logo span {
+  display: block;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 9.5px;
+  color: var(--color-brown-light);
+  letter-spacing: 0.18em;
+}
+
+/* ヘッダーの「無料相談」ボタン */
+.header__cta {
+  background: var(--color-brown);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+.header__cta:hover {
+  background: var(--color-brown-dark);
+}
+
+
+/* ================================================================
+   6. ヒーローセクション（メインビジュアル）
+   ================================================================ */
+.hero {
+  /* ヘッダーの高さ分だけ上にパディングを取る */
+  padding-top: var(--header-height);
+}
+
+/* 画像エリア */
+.hero__image {
+  position: relative;
+  height: 72vw;          /* スマホでは画面幅の72% */
+  max-height: 520px;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%; /* 上部を優先して表示 */
+}
+
+/* 画像下部のグラデーション（テキストと自然につながるように） */
+.hero__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(253, 250, 246, 0)    30%,
+    rgba(253, 250, 246, 0.90) 80%,
+    rgba(253, 250, 246, 1)   100%
+  );
+  pointer-events: none;
+}
+
+/* テキストエリア（画像と少し重ねる） */
+.hero__body {
+  padding: 0 22px 52px;
+  text-align: center;
+  margin-top: -52px;  /* 画像と重ねる量 */
+  position: relative;
+  z-index: 1;
+}
+
+/* キャッチコピー */
+.hero__headline {
+  font-family: var(--font-serif);
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-brown-dark);
+  letter-spacing: 0.04em;
+  margin: 10px 0 14px;
+}
+
+/* キャッチコピーの強調テキスト（グリーン） */
+.hero__headline em {
+  font-style: normal;
+  color: var(--color-green-dark);
+}
+
+/* コース名サブタイトル（キャッチの直下） */
+.hero__course-name {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-brown);
+  letter-spacing: 0.12em;
+  margin: 8px 0 18px;
+  display: inline-block;
+  padding: 5px 18px;
+  border: 1px solid var(--color-brown-light);
+  border-radius: 20px;
+}
+
+/* ブランドライン（継手 -TSUGITE-） */
+.hero__brand-line {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-brown);
+  letter-spacing: 0.18em;
+  margin: -8px 0 20px;
+  opacity: 0.8;
+}
+.hero__brand-line em {
+  font-style: normal;
+  color: var(--color-green-dark);
+}
+
+/* サブコピー */
+.hero__sub {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 2;
+  margin-bottom: 22px;
+}
+
+/* バッジ群 */
+.hero__badges {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+/* CTAボタンのグループ */
+.hero__cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ================================================================
+   7. 共感セクション
+   ================================================================ */
+
+/* 悩みリスト */
+.empathy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: 24px;
+}
+
+.empathy-list li {
+  background: var(--color-white);
+  border-left: 3px solid var(--color-brown-light);
+  padding: 13px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 14px;
+  color: var(--color-text-mid);
+  line-height: 1.75;
+}
+
+/* アイコン絵文字で代替するため非表示 */
+.empathy-list li::before {
+  content: none;
+}
+
+/* 共感リストのアイコン */
+.empathy-icon {
+  display: inline-block;
+  width: 28px;
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.empathy-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* 答えのボックス（グリーン背景） */
+.empathy-answer {
+  background: var(--color-green-pale);
+  border-radius: 14px;
+  padding: 26px 22px;
+  text-align: center;
+}
+
+.empathy-answer p {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--color-green-dark);
+  line-height: 1.95;
+}
+
+
+/* ================================================================
+   7.5 スクールを立ち上げた理由
+   ================================================================ */
+
+/* 雰囲気写真 */
+.about__photo {
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 0 24px;
+  box-shadow: 0 4px 20px rgba(107, 79, 53, 0.12);
+}
+
+.about__photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 冒頭の想いテキスト */
+.about__lead {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  line-height: 2;
+  letter-spacing: 0.03em;
+  margin-bottom: 20px;
+}
+
+.about__body {
+  font-size: 13.5px;
+  color: var(--color-text-mid);
+  line-height: 2;
+  margin-bottom: 28px;
+}
+
+/* 技術とマインドの両立ボックス */
+.about__philosophy-box {
+  border: 1.5px solid var(--color-brown-light);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin-bottom: 28px;
+  background: var(--color-white);
+}
+
+.about__philosophy-box__title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-beige-dark);
+  letter-spacing: 0.04em;
+}
+
+.about__philosophy-box__body {
+  font-size: 13.5px;
+  color: var(--color-text-mid);
+  line-height: 2;
+}
+
+/* 強み3枚カード */
+.about__strengths {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.about__strength-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 20px 18px;
+  box-shadow: 0 2px 14px rgba(155, 123, 90, 0.07);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.about__strength-num {
+  font-family: var(--font-en);
+  font-size: 28px;
+  color: var(--color-beige-dark);
+  font-weight: 300;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
+.about__strength-card h3 {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.about__strength-card p {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.85;
+}
+
+/* 群馬・地元についての締めボックス */
+.about__local {
+  background: var(--color-green-pale);
+  border-radius: 12px;
+  padding: 22px 20px;
+}
+
+.about__local p {
+  font-size: 13.5px;
+  color: var(--color-green-dark);
+  line-height: 2;
+}
+
+.about__local p + p {
+  margin-top: 12px;
+}
+
+/* ================================================================
+   8. 選ばれる理由
+   ================================================================ */
+.reason-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.reason-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 22px 18px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  box-shadow: 0 2px 14px rgba(155, 123, 90, 0.07);
+}
+
+/* アイコン（絵文字） */
+.reason-card__icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+  user-select: none;
+}
+
+/* 番号（01, 02…） */
+.reason-card__num {
+  font-family: var(--font-en);
+  font-size: 30px;
+  color: var(--color-beige-dark);
+  font-weight: 300;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: -2px;
+  user-select: none;
+}
+
+.reason-card__body h3 {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 7px;
+  line-height: 1.5;
+}
+
+.reason-card__body p {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.8;
+}
+
+
+/* ================================================================
+   9. ギャラリー
+   ================================================================ */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.gallery__item {
+  border-radius: 10px;
+  overflow: hidden;
+  /* ズームアニメーション用 */
+  line-height: 0;
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 148px;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.gallery__item:hover img {
+  transform: scale(1.05);
+}
+
+/* ワイドアイテム（2列分の横幅） */
+.gallery__item--wide {
+  grid-column: span 2;
+}
+
+.gallery__item--wide img {
+  height: 200px;
+}
+
+
+/* ================================================================
+   10. 先生紹介
+   ================================================================ */
+
+/* 先生の写真 */
+.teacher__photo {
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0 auto 22px;
+  max-width: 300px;   /* ← 横幅を制限して小さく表示 */
+  box-shadow: 0 8px 32px rgba(107, 79, 53, 0.13);
+}
+
+.teacher__photo img {
+  width: 100%;
+  /* 縦長（3:4）の比率で表示 */
+  aspect-ratio: 3 / 4;
+  height: auto;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* 先生の名前 */
+.teacher__name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* 肩書き */
+.teacher__role {
+  font-size: 12px;
+  color: var(--color-brown-light);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+/* 経歴・資格（グループ分け） */
+.teacher__highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.teacher__hl-group {
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.teacher__hl-label {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-green);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-green-light, #d6e8d4);
+}
+
+.teacher__hl-group ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.teacher__highlights li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.7;
+}
+
+/* リストの緑ドット */
+.teacher__highlights li::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  min-width: 7px;
+  background: var(--color-green);
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+/* 先生のメッセージ（引用ボックス） */
+.teacher__message {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 26px 20px 22px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-style: normal;
+  color: var(--color-text-mid);
+  line-height: 1.95;
+  position: relative;
+}
+
+/* 大きな引用符（装飾） */
+.teacher__message::before {
+  content: '\201C';
+  font-family: var(--font-en);
+  font-size: 56px;
+  color: var(--color-beige-mid);
+  position: absolute;
+  top: -4px;
+  left: 14px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* 引用符の下にテキストが入るようにオフセット */
+.teacher__message p {
+  margin-top: 20px;
+}
+
+
+/* 先生の2枚組サブ写真 */
+.teacher__sub-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 22px 0 0;
+}
+
+.teacher__sub-photo {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(107, 79, 53, 0.10);
+}
+
+.teacher__sub-photo img {
+  width: 100%;
+  /* 正方形の枠に画像全体を収める（切り取りなし） */
+  aspect-ratio: 1 / 1;
+  height: auto;
+  object-fit: contain;
+  background-color: var(--color-ivory);
+  transition: transform 0.4s ease;
+}
+
+.teacher__sub-photo:hover img {
+  transform: scale(1.04);
+}
+
+
+/* ================================================================
+   11. 著書紹介
+   ================================================================ */
+.book {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: var(--color-ivory);
+  padding: 26px 22px;
+  /* コンテナのパディングを打ち消してフルワイドに */
+  margin: 24px -22px 0;
+}
+
+.book__cover {
+  width: 108px;
+  min-width: 108px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 4px 6px 18px rgba(0, 0, 0, 0.17);
+}
+
+.book__label {
+  font-size: 11px;
+  color: var(--color-brown-light);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.book__title {
+  font-family: var(--font-serif);
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  line-height: 1.65;
+  margin-bottom: 9px;
+}
+
+.book__desc {
+  font-size: 12px;
+  color: var(--color-text-mid);
+  line-height: 1.85;
+  margin-bottom: 12px;
+}
+
+.book__amazon-link {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-brown);
+  border: 1px solid var(--color-brown-light);
+  border-radius: 20px;
+  padding: 6px 14px;
+  transition: background 0.2s ease;
+}
+
+.book__amazon-link:hover {
+  background: var(--color-ivory);
+}
+
+
+/* ================================================================
+   12. こんな方へ（向いている・向いていない）
+   ================================================================ */
+
+/* 先生からのメッセージボックス */
+.fit__message {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  color: var(--color-text-mid);
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.fit__message em {
+  font-style: normal;
+  color: var(--color-green-dark);
+  font-weight: 500;
+}
+
+/* 2枚カードのグリッド */
+.fit-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fit-card {
+  border-radius: 12px;
+  padding: 22px 18px;
+}
+
+/* おすすめの方（グリーン） */
+.fit-card--yes {
+  background: var(--color-green-pale);
+  border: 1.5px solid var(--color-green);
+}
+
+/* おすすめでない方（ベージュ・控えめ） */
+.fit-card--no {
+  background: var(--color-ivory);
+  border: 1.5px solid var(--color-beige-dark);
+}
+
+.fit-card__title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fit-card--yes .fit-card__title {
+  color: var(--color-green-dark);
+}
+
+.fit-card--no .fit-card__title {
+  color: var(--color-text-mid);
+}
+
+.fit-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.fit-card__list li {
+  font-size: 13.5px;
+  line-height: 1.75;
+  padding-left: 18px;
+  position: relative;
+}
+
+.fit-card--yes .fit-card__list li {
+  color: var(--color-text);
+}
+
+.fit-card--yes .fit-card__list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-green-dark);
+  font-weight: 700;
+}
+
+.fit-card--no .fit-card__list li {
+  color: var(--color-text-mid);
+}
+
+.fit-card--no .fit-card__list li::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: var(--color-text-light);
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+/* 先生の想いブロック */
+.fit__philosophy {
+  margin-top: 28px;
+  background: linear-gradient(155deg, var(--color-brown-dark) 0%, #7a5a3a 100%);
+  border-radius: 14px;
+  padding: 28px 22px;
+  color: #fff;
+}
+
+.fit__philosophy-lead {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  margin-bottom: 18px;
+  color: rgba(255,255,255,0.95);
+}
+
+.fit__philosophy-lead em {
+  font-style: normal;
+  color: #f5dfc0;
+}
+
+.fit__philosophy-body {
+  font-size: 13px;
+  color: rgba(255,255,255,0.78);
+  line-height: 2;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  padding-top: 16px;
+}
+
+/* ================================================================
+   13. 講座ラインナップ
+   ================================================================ */
+.course-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 22px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 14px rgba(155, 123, 90, 0.07);
+}
+
+/* 講座タグ（「人気No.1」など） */
+.course-card__tag {
+  display: inline-block;
+  background: var(--color-green-pale);
+  color: var(--color-green-dark);
+  font-size: 11px;
+  padding: 4px 13px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+.course-card__title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 9px;
+  line-height: 1.5;
+}
+
+.course-card__desc {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.85;
+  margin-bottom: 12px;
+}
+
+/* 回数・形式などのメタ情報 */
+.course-card__meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.course-card__meta span {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+/* メインコースの価格 */
+.course-card__price {
+  margin: 14px 0 4px;
+  font-size: 12px;
+  color: var(--color-text-mid);
+  line-height: 1;
+}
+
+.course-card__price-num {
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  letter-spacing: 0.02em;
+}
+
+.course-card__price small {
+  font-size: 11px;
+  color: var(--color-text-light);
+}
+
+/* 「詳しく見る →」リンク */
+.course-card__link {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--color-brown);
+  border-bottom: 1px solid var(--color-brown-light);
+  padding-bottom: 2px;
+  transition: color 0.2s ease;
+}
+.course-card__link:hover {
+  color: var(--color-brown-dark);
+}
+
+/* ---- コースグループのヘッダー ---- */
+.courses__group-header {
+  margin: 8px 0 18px;
+}
+
+.courses__group-header--sub {
+  margin-top: 40px;
+  padding-top: 36px;
+  border-top: 1px solid var(--color-beige-dark);
+}
+
+.courses__group-label {
+  display: block;
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--color-brown-light);
+  margin-bottom: 4px;
+}
+
+.courses__group-title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin-bottom: 6px;
+}
+
+.courses__group-desc {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.8;
+  margin-top: 8px;
+}
+
+/* ---- フィーチャードカード（基礎コース特別版） ---- */
+.course-card--featured {
+  border: 2px solid var(--color-brown-light);
+  position: relative;
+  overflow: visible;
+  padding-top: 0;
+}
+
+/* 上部のゴールドバナー */
+.course-card__banner {
+  background: linear-gradient(135deg, var(--color-brown) 0%, var(--color-brown-dark) 100%);
+  color: #fff;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 9px 18px;
+  margin: -1px -1px 18px;
+  border-radius: 10px 10px 0 0;
+}
+
+/* 限定バッジ群 */
+.course-card__limit {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+
+.limit-badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 13px;
+  border-radius: 20px;
+  background: var(--color-brown-dark);
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.limit-badge--time {
+  background: var(--color-green-dark);
+}
+
+/* 価格ブロック */
+.course-card__price-block {
+  background: var(--color-ivory);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin: 4px 0 16px;
+}
+
+.course-card__price-label {
+  font-size: 11px;
+  color: var(--color-brown);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+/* 価格の注意書き */
+.course-card__price-note {
+  font-size: 12px;
+  color: var(--color-text-mid);
+  line-height: 1.75;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-beige-dark);
+}
+
+/* ---- フィーチャードカード：ヘッダー行（タイトル左・価格右） ---- */
+.course-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+/* 右側の価格ブロック */
+.course-card__head-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.course-card__head-price .course-card__price-label {
+  font-size: 10px;
+  color: var(--color-brown);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+  white-space: nowrap;
+}
+
+/* 通常価格（打ち消し線） */
+.course-card__price-strike {
+  font-size: 11px;
+  color: #999;
+  text-decoration: line-through;
+  margin-bottom: 2px;
+  letter-spacing: 0.04em;
+}
+
+.course-card__head-price .course-card__price {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.course-card__head-price .course-card__price-num {
+  font-size: 26px;
+}
+
+/* ---- フィーチャードカード：大きなコピー文 ---- */
+.course-card__main-copy {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+  margin: 16px 0 12px;
+  padding: 14px 16px;
+  background: var(--color-ivory);
+  border-left: 3px solid var(--color-brown-light);
+  border-radius: 0 10px 10px 0;
+}
+
+/* ---- フィーチャードカード：希少性ブロック ---- */
+.course-card__scarcity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, var(--color-brown-dark) 0%, #7a5a3a 100%);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0 4px;
+  color: #fff;
+}
+
+/* 限定感を強めた強調バリアント */
+.course-card__scarcity--strong {
+  align-items: flex-start;
+  background: linear-gradient(135deg, #5c3a1e 0%, #8b5e3c 100%);
+  border: 2px solid #c8924a;
+  box-shadow: 0 4px 16px rgba(92, 58, 30, 0.25);
+  padding: 18px 20px;
+}
+
+.course-card__scarcity--strong .scarcity__num {
+  font-size: 64px;
+  color: #f5d9a8;
+}
+
+.course-card__scarcity--strong .scarcity__text strong {
+  font-size: 16px;
+  color: #f5d9a8;
+  letter-spacing: 0.1em;
+}
+
+.course-card__scarcity--strong .scarcity__text p {
+  font-size: 12.5px;
+  opacity: 1;
+  line-height: 1.85;
+}
+
+.course-card__scarcity--strong .scarcity__text p strong {
+  display: inline;
+  color: #f5d9a8;
+  font-size: inherit;
+  letter-spacing: 0.04em;
+}
+
+/* 大きな数字（「3」） */
+.scarcity__num {
+  font-family: var(--font-en);
+  font-size: 52px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+/* 数字の後ろの「名」 */
+.scarcity__num span {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 400;
+  vertical-align: baseline;
+  margin-left: 2px;
+}
+
+/* 右側のテキスト */
+.scarcity__text {
+  flex: 1;
+  line-height: 1.65;
+}
+
+.scarcity__text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.scarcity__text p {
+  font-size: 12px;
+  opacity: 0.82;
+  line-height: 1.7;
+}
+
+/* ---- メインコース：キャッチコピー ---- */
+.course-card__catch {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-green-dark);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+
+/* ---- スキルアップ：カテゴリラベル ---- */
+.skillup-category {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-brown);
+  letter-spacing: 0.06em;
+  margin: 20px 0 10px;
+  padding-left: 2px;
+}
+
+.skillup-category--second {
+  margin-top: 24px;
+}
+
+/* ---- スキルアップ講座リスト ---- */
+.skillup-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* 1枚のカード */
+.skillup-card {
+  background: var(--color-white);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 2px 10px rgba(155, 123, 90, 0.06);
+}
+
+/* 左：講座名 */
+.skillup-card__body {
+  flex: 1;
+}
+
+.skillup-card__title {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  line-height: 1.55;
+  margin-bottom: 7px;
+}
+
+/* 講座の詳細リスト（実技2回・Zoom3回など） */
+.skillup-card__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  list-style: none;
+}
+
+.skillup-card__details li {
+  font-size: 11px;
+  color: var(--color-brown);
+  background: var(--color-green-pale);
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* 右：価格＋ボタン */
+.skillup-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+/* 価格 */
+.skillup-card__price {
+  font-size: 11px;
+  color: var(--color-text-mid);
+  text-align: right;
+  line-height: 1;
+}
+
+.skillup-card__price span {
+  font-family: var(--font-en);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  letter-spacing: 0.02em;
+}
+
+.skillup-card__price small {
+  font-size: 10px;
+  color: var(--color-text-light);
+}
+
+/* 相談するボタン */
+.skillup-card__link {
+  display: inline-block;
+  white-space: nowrap;
+  background: var(--color-ivory);
+  border: 1px solid var(--color-brown-light);
+  color: var(--color-brown);
+  font-size: 11px;
+  padding: 6px 13px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  transition: background 0.2s ease;
+}
+
+.skillup-card__link:hover {
+  background: var(--color-beige);
+}
+
+/* ---- メインコース内の写真 ---- */
+.course-card__img {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 14px 0 16px;
+}
+
+.course-card__img img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ---- メインコース内の写真グリッド（複数枚） ---- */
+.course-card__img-grid {
+  display: grid;
+  gap: 6px;
+  margin: 14px 0 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 上1枚 ＋ 下2枚並び */
+.course-card__img-grid--triple {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+.course-card__img-grid--triple .grid-img:first-child {
+  grid-column: span 2; /* 1枚目は横幅いっぱい */
+}
+
+.course-card__img-grid .grid-img {
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.course-card__img-grid--triple .grid-img:first-child img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.course-card__img-grid--triple .grid-img:not(:first-child) img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ---- スキルアップカードのサムネイル ---- */
+.skillup-card__img {
+  width: 68px;
+  min-width: 68px;
+  height: 68px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.skillup-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* 料金の注意書き */
+.courses__note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-light);
+  margin-top: 8px;
+}
+
+
+/* ================================================================
+   13. 受講の流れ
+   ================================================================ */
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.flow-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding-bottom: 22px;
+  position: relative;
+}
+
+/* ステップ間の縦の点線 */
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  top: 42px;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-beige-dark);
+}
+
+/* 丸い番号アイコン */
+.flow-step__num {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  background: var(--color-brown);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-size: 16px;
+  font-weight: 300;
+  position: relative;
+  z-index: 1; /* 縦線の上に重ねる */
+  user-select: none;
+}
+
+.flow-step__body h3 {
+  font-family: var(--font-serif);
+  font-size: 15.5px;
+  font-weight: 400;
+  color: var(--color-brown-dark);
+  margin: 9px 0 6px;
+  line-height: 1.5;
+}
+
+.flow-step__body p {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.85;
+}
+
+/* フロー下の写真 */
+.flow__photo {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 28px;
+  box-shadow: 0 8px 28px rgba(107, 79, 53, 0.11);
+}
+
+.flow__photo img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+
+/* ================================================================
+   14. 卒業生の声
+   ================================================================ */
+.voice-card {
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 22px 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 14px rgba(155, 123, 90, 0.06);
+}
+
+/* ヘッダー（アバター＋名前） */
+.voice-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* アバターの丸（絵文字アイコン） */
+.voice-card__avatar {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  background: var(--color-ivory);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.voice-card__meta strong {
+  display: block;
+  font-size: 14px;
+  color: var(--color-brown-dark);
+  margin-bottom: 2px;
+}
+
+.voice-card__meta span {
+  font-size: 11px;
+  color: var(--color-text-light);
+}
+
+/* ビフォーアフターのボックス */
+.voice-card__ba {
+  background: var(--color-ivory);
+  border-radius: 8px;
+  padding: 14px 15px;
+  margin-bottom: 13px;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+/* 「受講前」「受講後」のラベル */
+.ba-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--color-brown-light);
+  margin-bottom: 3px;
+}
+
+/* 受講前テキスト（薄いグレー） */
+.ba-before {
+  color: var(--color-text-light);
+  margin-bottom: 12px;
+}
+
+/* 受講後テキスト（グリーン・強調） */
+.ba-after {
+  color: var(--color-green-dark);
+  font-weight: 500;
+}
+
+/* コメント本文 */
+.voice-card__text {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.9;
+}
+
+
+/* ================================================================
+   15. FAQ（アコーディオン）
+   ================================================================ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.faq-item {
+  background: var(--color-white);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* 質問ボタン */
+.faq-item__q {
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-brown-dark);
+  line-height: 1.65;
+}
+
+/* 「Q」の文字装飾 */
+.faq-item__q::before {
+  content: 'Q';
+  font-family: var(--font-en);
+  font-size: 17px;
+  color: var(--color-brown-light);
+  font-weight: 400;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+/* 開閉アイコン（＋マーク） */
+.faq-item__icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  position: relative;
+  margin-top: 2px;
+}
+
+/* 横線（常に表示） */
+.faq-item__icon::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 1.5px;
+  background: var(--color-brown-light);
+  border-radius: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 縦線（開くと回転して見えなくなる） */
+.faq-item__icon::after {
+  content: '';
+  position: absolute;
+  width: 1.5px;
+  height: 12px;
+  background: var(--color-brown-light);
+  border-radius: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* 開いている状態（aria-expanded="true"のとき） */
+.faq-item__q[aria-expanded="true"] .faq-item__icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+/* 回答エリア（閉じている状態） */
+.faq-item__a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s ease;
+}
+
+/* 回答エリア（開いている状態、JavaScriptで .is-open を付与） */
+.faq-item__a.is-open {
+  max-height: 500px;
+}
+
+/* 回答のテキスト */
+.faq-item__a p {
+  padding: 2px 18px 18px 48px; /* Qの文字に揃えてインデント */
+  font-size: 13.5px;
+  color: var(--color-text-mid);
+  line-height: 1.85;
+}
+
+/* 「A」の文字装飾 */
+.faq-item__a p::before {
+  content: 'A  ';
+  font-family: var(--font-en);
+  font-size: 17px;
+  color: var(--color-green);
+  font-weight: 400;
+  margin-left: -30px;
+  padding-right: 13px;
+}
+
+
+/* ================================================================
+   16. お問い合わせ・CTAセクション
+   ================================================================ */
+.cta__sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.95;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.cta__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cta__note {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 20px;
+  line-height: 1.9;
+  text-align: center;
+}
+
+/* CTAのやわらかいメッセージ */
+.cta__warm {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 2;
+  margin: 28px auto 0;
+  padding: 22px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 400px;
+  text-align: center;
+}
+
+
+/* ================================================================
+   17. お問い合わせフォーム
+   ================================================================ */
+.contact-form {
+  background: rgba(253, 250, 246, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 28px 20px;
+  margin-top: 36px;
+}
+
+.contact-form__title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.contact-form__note {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 22px;
+  line-height: 1.8;
+}
+
+/* フォームの1行 */
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group__label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* 必須マーク */
+.required {
+  display: inline-block;
+  background: rgba(200, 169, 138, 0.7);
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin-left: 5px;
+  vertical-align: middle;
+  letter-spacing: 0;
+}
+
+/* 入力欄の共通スタイル */
+.form-group__input,
+.form-group__select,
+.form-group__textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid transparent;
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* フォーカス時 */
+.form-group__input:focus,
+.form-group__select:focus,
+.form-group__textarea:focus {
+  background: var(--color-white);
+  border-color: var(--color-brown-light);
+  box-shadow: 0 0 0 3px rgba(200, 169, 138, 0.18);
+}
+
+/* エラー時 */
+.form-group__input.is-error,
+.form-group__select.is-error,
+.form-group__textarea.is-error {
+  border-color: #e07070;
+  box-shadow: 0 0 0 3px rgba(224, 112, 112, 0.15);
+}
+
+.form-group__textarea {
+  height: 110px;
+  resize: vertical;
+}
+
+/* エラーメッセージ */
+.form-group__error {
+  display: block;
+  font-size: 11.5px;
+  color: #ffb8b8;
+  margin-top: 5px;
+  min-height: 1.5em;
+}
+
+/* 送信ボタン */
+.form-submit {
+  display: block;
+  width: 100%;
+  background: var(--color-white);
+  color: var(--color-brown-dark);
+  padding: 15px 20px;
+  border-radius: 40px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-top: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.form-submit:hover, .form-submit:focus-visible {
+  background: var(--color-ivory);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+/* 送信中（disabledの状態） */
+.form-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 送信完了メッセージ */
+.form-success {
+  margin-top: 18px;
+  background: rgba(238, 243, 235, 0.95);
+  border-radius: 10px;
+  padding: 18px 16px;
+  text-align: center;
+}
+
+.form-success p {
+  font-size: 14px;
+  color: var(--color-green-dark);
+  line-height: 1.8;
+}
+
+
+/* ================================================================
+   18. フッター
+   ================================================================ */
+.footer {
+  background: var(--color-brown-dark);
+  color: rgba(255, 255, 255, 0.6);
+  /* 下にスティッキーCTA分のパディングを追加 */
+  padding: 44px 22px 110px;
+  text-align: center;
+}
+
+.footer__logo {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+
+.footer__en {
+  font-family: var(--font-en);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--color-brown-light);
+  margin-bottom: 24px;
+}
+
+.footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.footer__nav a {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s ease;
+}
+
+.footer__nav a:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.footer__copy {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ================================================================
+   19. スティッキーCTA（画面下部に固定されるボタン）
+   ================================================================ */
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: rgba(253, 250, 246, 0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--color-beige-dark);
+  padding: 11px 16px;
+  display: flex;
+  gap: 9px;
+  /* 最初は画面外に隠す */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.34, 1.26, 0.64, 1);
+}
+
+/* 表示状態（JavaScriptで .is-visible を付与） */
+.sticky-cta.is-visible {
+  transform: translateY(0);
+}
+
+.sticky-cta a {
+  flex: 1;
+  text-align: center;
+  padding: 13px 6px;
+  border-radius: 28px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s ease;
+}
+.sticky-cta a:hover {
+  opacity: 0.82;
+}
+
+/* 「無料相談する」ボタン（ブラウン塗りつぶし） */
+.sticky-cta__form {
+  background: var(--color-brown);
+  color: #fff;
+}
+
+/* 「Instagram DM」ボタン（アウトライン） */
+.sticky-cta__insta {
+  background: transparent;
+  color: var(--color-brown-dark);
+  border: 1.5px solid var(--color-brown-light);
+}
+
+
+/* ================================================================
+   20. スクロールアニメーション
+   要素が画面に入るとふわっと表示されます（JavaScriptと連携）
+   ================================================================ */
+
+/* アニメーション対象（最初は見えない・少し下にある状態） */
+.fade-in {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+/* 画面に入ったら表示（JavaScriptで .is-visible を付与） */
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 少し遅延させてカードを順番に表示 */
+.fade-in:nth-child(2) { transition-delay: 0.08s; }
+.fade-in:nth-child(3) { transition-delay: 0.16s; }
+.fade-in:nth-child(4) { transition-delay: 0.24s; }
+
+
+/* ================================================================
+   継手 -TSUGITE- セクション
+   ================================================================ */
+
+.section--tsugite {
+  background: linear-gradient(180deg, #f5f0ea 0%, #faf7f4 100%);
+}
+
+/* タイトル：漢字 ＋ ローマ字 */
+.tsugite__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.tsugite__kanji {
+  font-family: var(--font-serif);
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--color-brown-dark);
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.tsugite__roman {
+  font-family: var(--font-en);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-brown);
+  letter-spacing: 0.4em;
+  opacity: 0.7;
+}
+
+.tsugite__tagline {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  color: var(--color-green-dark);
+  letter-spacing: 0.2em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* リード文 */
+.tsugite__lead {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--color-brown-dark);
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.tsugite__lead em {
+  font-style: normal;
+  color: var(--color-green-dark);
+  font-weight: 600;
+}
+
+/* ボディ文 */
+.tsugite__body {
+  font-size: 14px;
+  color: var(--color-text-mid);
+  line-height: 2;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+/* 4つの特徴 */
+.tsugite__features {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.tsugite__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 6px rgba(120, 90, 60, 0.06);
+}
+
+.tsugite__feature-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  border-radius: 50%;
+  background: var(--color-green);
+  margin-top: 7px;
+}
+
+.tsugite__feature p {
+  font-size: 13px;
+  color: var(--color-text-mid);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* 免責ノート */
+.tsugite__note-box {
+  background: rgba(180, 160, 130, 0.08);
+  border-left: 3px solid var(--color-brown-light);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  margin-top: 8px;
+}
+
+.tsugite__note-box p {
+  font-size: 11.5px;
+  color: #a89070;
+  line-height: 1.9;
+  margin: 0;
+}
+
+/* コースカードのブランド名（継手式 ～） */
+.course-card__brand-name {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  color: var(--color-green-dark);
+  letter-spacing: 0.16em;
+  margin: 2px 0 0;
+  opacity: 0.85;
+}
+
+/* スキルアップカードのブランド名 */
+.skillup-card__brand {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  color: var(--color-green-dark);
+  letter-spacing: 0.12em;
+  margin: 2px 0 6px;
+  opacity: 0.8;
+}
+
+
+/* ================================================================
+   21. PCレイアウト（画面幅 768px 以上）
+   スマホで書いたスタイルをPCで上書きします
+   ================================================================ */
+@media (min-width: 768px) {
+
+  body {
+    font-size: 16px;
+  }
+
+  /* ヒーロー画像の高さを調整 */
+  .hero__image {
+    height: 56vw;
+    max-height: 580px;
+  }
+
+  /* ヒーローのキャッチコピーを大きく */
+  .hero__headline {
+    font-size: 32px;
+  }
+
+  /* ヒーローのボタンを横並びに */
+  .hero__cta-group {
+    flex-direction: row;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .hero__cta-group .btn-main,
+  .hero__cta-group .btn-sub {
+    max-width: 270px;
+    margin: 0;
+  }
+
+  /* セクションタイトルを大きく */
+  .section__title {
+    font-size: 26px;
+  }
+
+  /* 継手セクション：PC表示 */
+  .tsugite__kanji { font-size: 72px; }
+  .tsugite__roman { font-size: 15px; letter-spacing: 0.5em; }
+  .tsugite__lead  { font-size: 18px; }
+  .tsugite__body  { font-size: 15px; }
+
+  .tsugite__features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* 選ばれる理由を2列グリッドに */
+  .reason-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ギャラリーの画像を高く */
+  .gallery__item img       { height: 190px; }
+  .gallery__item--wide img { height: 260px; }
+
+  /* 先生の写真はアスペクト比で制御するため高さ上書きなし */
+
+  /* フロー写真を高く */
+  .flow__photo img { height: 260px; }
+
+  /* CTAのボタンを横並びに */
+  .cta__buttons {
+    flex-direction: row;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .cta__buttons .btn-main-inv,
+  .cta__buttons .btn-sub-inv {
+    max-width: 270px;
+    margin: 0;
+  }
+}
