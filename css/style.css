@@ -808,6 +808,19 @@ button {
   margin-bottom: 20px;
 }
 
+/* 先生ストーリー */
+.teacher__story {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-text);
+  background: rgba(255,255,255,0.6);
+  border-left: 3px solid var(--color-brown-light);
+  padding: 16px 18px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 28px;
+  font-style: italic;
+}
+
 /* 経歴・資格（グループ分け） */
 .teacher__highlights {
   display: flex;
@@ -1185,6 +1198,18 @@ button {
 .course-card__price small {
   font-size: 11px;
   color: var(--color-text-light);
+}
+
+/* 価格根拠テキスト */
+.course-card__price-basis {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--color-text-light);
+  background: rgba(255,255,255,0.55);
+  border-left: 2px solid var(--color-brown-light);
+  padding: 8px 12px;
+  border-radius: 0 4px 4px 0;
 }
 
 /* 「詳しく見る →」リンク */
