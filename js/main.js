@@ -274,36 +274,30 @@ function isValidEmail(email) {
 
 
 /* ================================================================
-   フォーム送信のシミュレーション
-   ✏️ 本番では実際の送信処理（fetch等）に差し替えてください
+   Netlify Forms へ fetch で送信する
    ================================================================ */
 function simulateFormSubmit(form, submitBtn, successMessage) {
-  // 実際の送信コード例（fetchを使う場合）：
-  //
-  // fetch('https://your-endpoint.com', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(Object.fromEntries(new FormData(form)))
-  // })
-  // .then(function(res) {
-  //   if (res.ok) {
-  //     showSuccess(form, submitBtn, successMessage);
-  //   } else {
-  //     alert('送信に失敗しました。もう一度お試しください。');
-  //     submitBtn.disabled = false;
-  //     submitBtn.textContent = '送信する';
-  //   }
-  // })
-  // .catch(function() {
-  //   alert('通信エラーが発生しました。');
-  //   submitBtn.disabled = false;
-  //   submitBtn.textContent = '送信する';
-  // });
+  var data = new FormData(form);
 
-  // ---- デモ用：1.2秒後に完了メッセージを表示 ----
-  setTimeout(function () {
-    showSuccess(form, submitBtn, successMessage);
-  }, 1200);
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data).toString()
+  })
+  .then(function (res) {
+    if (res.ok) {
+      showSuccess(form, submitBtn, successMessage);
+    } else {
+      alert('送信に失敗しました。もう一度お試しください。');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '送信する';
+    }
+  })
+  .catch(function () {
+    alert('通信エラーが発生しました。もう一度お試しください。');
+    submitBtn.disabled = false;
+    submitBtn.textContent = '送信する';
+  });
 }
 
 /* 送信完了の処理 */
