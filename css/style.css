@@ -2408,6 +2408,53 @@ button {
 
 
 /* ================================================================
+   20b. スキルアップカード：スマホ専用レイアウト（767px 以下）
+   ================================================================ */
+@media (max-width: 767px) {
+
+  /* カードを縦積みに変更 */
+  .skillup-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0 14px;
+    overflow: hidden;
+    overflow-x: hidden;
+  }
+
+  /* 画像を横幅いっぱいに */
+  .skillup-card__img {
+    width: 100%;
+    min-width: unset;
+    height: 160px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  /* タイトル・タグエリアに左右のパディングを追加 */
+  .skillup-card__body {
+    padding: 12px 16px 0;
+  }
+
+  /* 価格とボタンを横並びに、カード内に収める */
+  .skillup-card__right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px 0;
+    flex-shrink: unset;
+  }
+
+  .skillup-card__price {
+    text-align: left;
+  }
+
+  /* カードリスト全体のはみ出し防止 */
+  .skillup-list {
+    overflow-x: hidden;
+  }
+}
+
+
+/* ================================================================
    21. PCレイアウト（画面幅 768px 以上）
    スマホで書いたスタイルをPCで上書きします
    ================================================================ */
