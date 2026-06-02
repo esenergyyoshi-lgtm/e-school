@@ -196,19 +196,7 @@ function initContactForm() {
     submitBtn.disabled    = true;
     submitBtn.textContent = '送信中…';
 
-    // ============================================================
-    // ✏️ 本番の送信処理はここを変更してください
-    //
-    // 例①：Formspreeを使う場合
-    //   form.action = 'https://formspree.io/f/YOUR_ID';
-    //   form.submit();
-    //
-    // 例②：Google Apps Script（GAS）を使う場合
-    //   sendToGas(form, submitBtn, successMessage);
-    //
-    // デモ用のシミュレーションは下記の関数を呼んでいます
-    // ============================================================
-    simulateFormSubmit(form, submitBtn, successMessage);
+    sendToPhp(form, submitBtn, successMessage);
   });
 
   // ---- 入力中にリアルタイムでエラーを消す ----
@@ -274,18 +262,16 @@ function isValidEmail(email) {
 
 
 /* ================================================================
-   Netlify Forms へ fetch で送信する
+   contact.php へ fetch で送信する
    ================================================================ */
-function simulateFormSubmit(form, submitBtn, successMessage) {
-  var data = new FormData(form);
-
-  fetch('/', {
+function sendToPhp(form, submitBtn, successMessage) {
+  fetch('contact.php', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(data).toString()
+    body: new FormData(form)
   })
-  .then(function (res) {
-    if (res.ok) {
+  .then(function (res) { return res.json(); })
+  .then(function (data) {
+    if (data.status === 'ok') {
       showSuccess(form, submitBtn, successMessage);
     } else {
       alert('送信に失敗しました。もう一度お試しください。');
