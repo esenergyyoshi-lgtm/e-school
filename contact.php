@@ -53,9 +53,13 @@ $body = implode("\n", [
     '返信先：' . $email,
 ]);
 
+$from    = 'noreply@etsukolab.com';
 $to      = 'es.energy.yoshi@gmail.com';
 $subject = '高崎セラピストスクール：お問い合わせが届きました';
-$headers = 'Reply-To: ' . $email;
+$headers = implode("\r\n", [
+    'From: ' . $from,
+    'Reply-To: ' . $email,
+]);
 
 $result = mb_send_mail($to, $subject, $body, $headers);
 
